@@ -3,11 +3,11 @@ import json
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/ieos')
 def home():
 	return render_template('index.html')
 
-@app.route('/find',methods = ['GET'])
+@app.route('/ieos/find',methods = ['GET'])
 def find():
 	query = request.args.get('q')
 	data = __get_matching_sequence(query)
