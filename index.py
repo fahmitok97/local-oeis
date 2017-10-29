@@ -13,6 +13,10 @@ def find():
 	data = __get_matching_sequence(query)
 	return render_template('display.html', data = data)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 def __clean_ctx(ctx):
 	cleaned = ""
 	for elem in ctx:
