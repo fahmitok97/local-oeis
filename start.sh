@@ -1,1 +1,1 @@
-gunicorn application:app --bind 0.0.0.0:8000 wsgi
+gunicorn application:app --bind 0.0.0.0:8085 wsgi
