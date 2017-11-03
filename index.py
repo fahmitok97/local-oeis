@@ -18,11 +18,35 @@ def page_not_found(e):
     return render_template('404.html'), 404
 
 def __clean_ctx(ctx):
-	cleaned = ""
+	cleaned = []
+	word = ""
+
 	for elem in ctx:
-		if not(elem == " " or elem == ",") :
-			cleaned += elem
+		if (elem == " " or elem == ",") :
+			if word != "" :
+				cleaned.append(int(word))
+				word = ""
+
+		elif ( ord(elem) >= ord('0') and ord(elem) <= ord('9') ) :
+			word += elem
+
+	if word != "" :
+		cleaned.append(int(word))
+		word = ""
+
 	return cleaned
+
+def __is_match(query, document):
+	doc_idx = 0
+	for elem in query :
+		while document[doc_idx] != elem :
+			doc_idx += 1
+			if doc_idx >= len(document) :
+				return False
+
+		doc_idx += 1
+
+	return True
 
 def __get_matching_sequence(query):
 	result = []
@@ -30,13 +54,17 @@ def __get_matching_sequence(query):
 
 	with open('result.json') as data_file:
 		data = json.load(data_file)
+		can = True
 
 		for elem in data:
 			cleaned_element = __clean_ctx(elem['sequence'])
-			if(cleaned_query in cleaned_element):
+			if(can):
+				can = False
+
+			if(__is_match(cleaned_query, cleaned_element)):
 				result.append(elem)
 
-	return result
+	return result[:10]
 
 if __name__ == '__main__':
 	app.run()
