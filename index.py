@@ -7,9 +7,9 @@ app = Flask(__name__)
 def home():
 	return render_template('index.html')
 
-@app.route('/ieos/find',methods = ['GET'])
+@app.route('/ieos/find',methods = ['POST'])
 def find():
-	query = request.args.get('q')
+	query = request.form['q']
 	data = __get_matching_sequence(query)
 	return render_template('display.html', data = data)
 
@@ -39,6 +39,9 @@ def __clean_ctx(ctx):
 def __is_match(query, document):
 	doc_idx = 0
 	for elem in query :
+		if doc_idx >= len(document) :
+			return False
+
 		while document[doc_idx] != elem :
 			doc_idx += 1
 			if doc_idx >= len(document) :

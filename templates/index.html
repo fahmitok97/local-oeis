@@ -17,7 +17,7 @@
 		      <h2 class="subtitle">
 		        "your sequence already have a name, find it here"
 		      </h2>
-		      <form method="get" action="{{url_for('find')}}" class="field has-addons">
+		      <form method="post" action="{{url_for('find')}}" class="field has-addons">
 				  <input class="control input" name="q" type="text" placeholder="Type your sequence (ex: 1, 1, 2, 20)">
 				  <button type="submit" class="control button is-primary"> Find! </button>
 			  </form>
